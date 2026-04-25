@@ -77,29 +77,44 @@
                 <div class="pt-4">
                     <h4 class="text-lg font-semibold text-slate-800 border-b pb-2 mb-4 flex items-center">
                         <i data-lucide="credit-card" class="h-5 w-5 mr-2 text-slate-600"></i>
-                        2. Pembayaran Yuran (FPX)
+                        2. Pembayaran Yuran (Manual Transfer)
                     </h4>
 
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200 mb-5 text-center">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">Sila klik butang di bawah untuk membuat pembayaran yuran melalui sistem FPX (Perbankan Internet). Selepas berjaya, sila simpan/screenshot resit.</p>
+                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200 mb-5">
+                        <p class="text-sm text-slate-600 mb-3 font-medium">Sila lakukan pindahan bank (Instant Transfer) ke akaun di bawah:</p>
                         
-                        <a href="https://toyyibpay.com/" target="_blank" class="inline-flex justify-center items-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none transition duration-150">
-                            <i data-lucide="external-link" class="h-4 w-4 mr-2"></i>
-                            KLIK SINI UNTUK BAYAR (FPX)
-                        </a>
+                        <div class="space-y-2 bg-white p-4 rounded border border-slate-200">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500">Bank:</span>
+                                <span class="font-bold text-slate-900 uppercase">Maybank</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500">No. Akaun:</span>
+                                <div class="flex items-center">
+                                    <span class="font-bold text-slate-900" id="accNumber">006089230916</span>
+                                    <button type="button" onclick="copyText('006089230916')" class="ml-2 p-1 text-blue-600 hover:bg-blue-50 rounded">
+                                        <i data-lucide="copy" class="h-4 w-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500">Nama:</span>
+                                <span class="font-bold text-slate-900 text-right">MUHAMMAD KHAIR HAKIMI BIN ABD MALEK</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div>
-                        <label for="receipt" class="block text-sm font-semibold text-slate-700">Muat Naik Resit Pembayaran FPX (Wajib)</label>
+                        <label for="receipt" class="block text-sm font-semibold text-slate-700">Muat Naik Resit Pembayaran (Wajib)</label>
                         <input type="file" id="receipt" name="receipt" accept="image/*,.pdf" required class="mt-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-slate-900 file:text-white hover:file:bg-slate-800 border border-slate-300 rounded-md cursor-pointer">
-                        <p class="mt-1 text-xs text-slate-500">Format diterima: JPG, PNG, PDF (Max: 5MB)</p>
+                        <p class="mt-1 text-xs text-slate-500">Sila muat naik screenshot atau fail PDF resit anda.</p>
                     </div>
                 </div>
 
                 <!-- Submit Button -->
                 <div class="pt-6">
                     <button type="submit" id="submitBtn" class="w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-lg shadow-sm text-base font-bold text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150">
-                        HANTAR MAKLUMAT & SAHKAN BAYARAN
+                        HANTAR MAKLUMAT & RESIT
                         <i data-lucide="send" class="h-5 w-5 ml-2"></i>
                     </button>
                     <p class="text-center text-xs text-slate-500 mt-3 font-medium">
@@ -140,6 +155,13 @@
         // Initialize Icons
         lucide.createIcons();
 
+        // Copy function
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Nombor akaun disalin ke clipboard!');
+            });
+        }
+
         // --- CONFIGURATION ---
         // Gantikan URL di bawah dengan Web App URL dari Google Apps Script anda
         const scriptURL = 'MASUKKAN_URL_GOOGLE_SCRIPT_ANDA_DI_SINI'; 
@@ -151,7 +173,6 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Cek jika URL script masih belum diisi
             if (scriptURL === 'MASUKKAN_URL_GOOGLE_SCRIPT_ANDA_DI_SINI') {
                 alert('Peringatan: Anda belum memasukkan Google Script URL ke dalam kod HTML ini.');
                 return;
